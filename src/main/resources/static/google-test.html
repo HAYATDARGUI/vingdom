@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google OAuth test - Vingdom Auth Service</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 60px auto; padding: 0 20px; }
+    pre { background: #f4f4f4; padding: 16px; border-radius: 8px; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    h2 { margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <h1>Vingdom - Google OAuth manual test</h1>
+  <p>This page is a throwaway dev tool, not part of the product. It gets a real Google ID token and POSTs it straight to <code>/auth/oauth/google</code>.</p>
+
+  <div id="g_id_onload"
+       data-client_id="685686591041-toice9eljg3spefo08fqdv2fj4h9gefi.apps.googleusercontent.com"
+       data-callback="handleCredentialResponse">
+  </div>
+  <div class="g_id_signin" data-type="standard"></div>
+
+  <h2>Raw ID token from Google</h2>
+  <pre id="idTokenBox">(click the button above)</pre>
+
+  <h2>Response from POST /auth/oauth/google</h2>
+  <pre id="responseBox">(waiting)</pre>
+
+  <script>
+    function handleCredentialResponse(response) {
+      document.getElementById('idTokenBox').textContent = response.credential;
+
+      fetch('/auth/oauth/google', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken: response.credential })
+      })
+        .then(async (res) => {
+          const body = await res.text();
+          document.getElementById('responseBox').textContent = 'HTTP ' + res.status + '\n' + body;
+        })
+        .catch((err) => {
+          document.getElementById('responseBox').textContent = 'Request failed: ' + err;
+        });
+    }
+  </script>
+</body>
+</html>

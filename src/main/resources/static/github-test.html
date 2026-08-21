@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub OAuth test - Vingdom Auth Service</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 60px auto; padding: 0 20px; }
+    a.button {
+      display: inline-block; background: #24292f; color: white; text-decoration: none;
+      padding: 10px 18px; border-radius: 6px; font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vingdom - GitHub OAuth manual test</h1>
+  <p>This page is a throwaway dev tool, not part of the product. Clicking the button below sends you to GitHub's own login/consent screen; GitHub then redirects back to <code>github-callback.html</code> with a one-time code, which gets exchanged for your profile automatically.</p>
+
+  <a class="button"
+     href="https://github.com/login/oauth/authorize?client_id=Ov23liF5I9IQFZIZpMsf&scope=read:user%20user:email">
+    Sign in with GitHub
+  </a>
+</body>
+</html>
